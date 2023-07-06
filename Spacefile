@@ -4,7 +4,7 @@ micros:
   - name: actions
     src: ./actions
     engine: nodejs16
-    #provide_actions: true
+    provide_actions: true
     primary: true
     run: node index.js
     dev: node --watch index.js
