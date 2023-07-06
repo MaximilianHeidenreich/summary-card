@@ -10,6 +10,7 @@ micros:
     dev: node --watch index.js
     public_routes:
       - "/api/summarize"
+      - "/"
   # - name: cards
   #   path: /cards
   #   src: ./cards

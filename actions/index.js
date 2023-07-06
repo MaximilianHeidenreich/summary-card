@@ -1,5 +1,5 @@
 import express from "express";
-import { createActions, Inputs } from 'deta-space-actions'
+/*import { createActions, Inputs } from 'deta-space-actions'
 import { Configuration, OpenAIApi } from 'openai-edge'
 
 const apiConfig = new Configuration({
@@ -7,7 +7,7 @@ const apiConfig = new Configuration({
 });
 const openai = new OpenAIApi(apiConfig);
 const LLM_PREFIX = "Provide a condensed summary of the following text, highlighting its essential points and ideas: ";
-
+*/
 const app = express()
 app.use(express.json())
 
@@ -77,12 +77,12 @@ app.get("/__space/actions", (req, res) => {
     });
 });
 
-app.get("/api/summarize", (req, res) => {
+app.post("/api/summarize", (req, res) => {
   res.json({ message: 'Hello from the backend Micro!' })
 })
 
 app.get("/", (req, res) => {
-    res.text("Hello World!");
+    res.send("Hello World!");
 });
 
 const port = process.env.PORT || 3000
