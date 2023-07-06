@@ -24,7 +24,7 @@ app.get("/__space/actions", (req, res) => {
                         accept: ["text"]
                     }
                 ],
-                output: "/"
+                output: "@deta/detail"
             }
         ]
     });
@@ -55,11 +55,19 @@ app.post("/api/summarize", async (req, res) => {
             frequency_penalty: 0,
             presence_penalty: 0
         });
-        res.json({ summary: response.data.choices[0].message.content });
+        //res.json({ summary: response.data.choices[0].message.content });
+        res.json({
+            title: "Summary",
+            text: response.data.choices[0].message.content
+        });
     }
     catch (e) {
         console.error(e);
-        res.json({ summary: `Could not complete summarization task: ${e}` });
+        //res.json({ summary: `Could not complete summarization task: ${e}` });
+        res.json({
+            title: "Could not summarize text!",
+            text: e
+        });
     }
 
 });
