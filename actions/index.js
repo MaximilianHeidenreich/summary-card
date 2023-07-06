@@ -42,12 +42,12 @@ app.post("/api/summarize", async (req, res) => {
             apiKey: process.env.OPENAI_API_KEY
         });
         const openai = new OpenAIApi(configuration);
-        const response = await openai.createCompletion({
+        const response = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             //prompt: `${LLM_PREFIX} ${srcText}`,
             messages: [
                 { role: "system", content: LLM_SYSTEM },
-                { role: "user", content: srcText },
+                { role: "user", content: srcText }
             ],
             temperature: 1,
             max_tokens: 300,
@@ -55,7 +55,7 @@ app.post("/api/summarize", async (req, res) => {
             frequency_penalty: 0,
             presence_penalty: 0
         });
-        res.json({ summary: response.choices[0].text });
+        res.json({ summary: response.data.choices[0].message.content });
     }
     catch (e) {
         console.error(e);
