@@ -90,8 +90,8 @@ app.get("/__space/actions", (req, res) => {
                 input: [
                     {
                         name: "text",
-                        type: "string"//,
-                        //accept: ["text"]
+                        type: "string",
+                        accept: ["text"]
                     }
                 ],
                 output: "/"
