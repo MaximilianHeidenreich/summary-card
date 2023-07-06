@@ -1,0 +1,20 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: actions
+    src: ./actions
+    engine: nodejs16
+    #provide_actions: true
+    primary: true
+    run: node index.js
+    dev: node --watch index.js
+    public_routes:
+      - "/api/summarize"
+  # - name: cards
+  #   path: /cards
+  #   src: ./cards
+  #   engine: static
+  #   serve: dist
+  #   commands:
+  #     - npm run build
+  #   public: true
