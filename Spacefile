@@ -8,6 +8,11 @@ micros:
     primary: true
     run: node index.js
     dev: node --watch index.js
+    presets:
+      env:
+        - name: OPENAI_API_KEY
+          description: API Key used for OpenAI requests
+          default: "null"
     public_routes:
       - "/api/summarize"
       - "/"

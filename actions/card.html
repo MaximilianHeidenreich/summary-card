@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            http-equiv="X-UA-Compatible"
+            content="IE=edge" />
+        <title>Summarization</title>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1" />
+        <style type="text/css">
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <span>Summary:</span>
+        <p id="summary"></p>
+        <script>
+            function main() {
+                // parse input from query params
+                const params = new URLSearchParams(window.location.search);
+                const input = params.get("input");
+                if (!input) {
+                    const errorElement = document.createElement("p");
+                    errorElement.innerText = "No input provided";
+                    document.body.appendChild(errorElement);
+                    return;
+                }
+                const { summary } = JSON.parse(input);
+                // display message
+                const summaryElement = document.getElementById("summary");
+                summaryElement.innerText = summary;
+                //document.body.appendChild(summaryElement);
+                // add tty action
+                window.top.postMessage(
+                    {
+                        type: "add-action",
+                        action: {
+                            name: "Copy Summary",
+                            type: "copy",
+                            text: summary
+                        }
+                    },
+                    "https://deta.space"
+                );
+            }
+            main();
+        </script>
+    </body>
+</html>
