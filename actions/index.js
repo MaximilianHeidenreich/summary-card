@@ -4,81 +4,11 @@ import { fileURLToPath } from "url";
 
 import { Configuration, OpenAIApi } from "openai";
 
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY
-});
-const openai = new OpenAIApi(configuration);
 const LLM_PREFIX = "Provide a condensed summary of the following text, highlighting its essential points and ideas: ";
 const LLM_SYSTEM = "You are a text summarization engine. Provide a condensed summary of the following text, highlighting its essential points and ideas. Respond with the summarization only.";
 
-/*import { createActions, Inputs } from 'deta-space-actions'
-import { Configuration, OpenAIApi } from 'openai-edge'
-
-const apiConfig = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY || "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",
-});
-const openai = new OpenAIApi(apiConfig);
-*/
 const app = express();
 app.use(express.json());
-
-/*const actions = createActions();
-
-actions.add({
-  name: "summarize_text",
-  title: 'Summarize Text',
-  input: [
-    Inputs("text").String(),
-  ],
-  card: "basic",
-  handler: async input => {
-
-    const response = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        stream: true,
-        promptOrMessages: `${LLM_PREFIX}${input.text}`,
-        max_tokens: 554,
-        temperature: 0.7,
-        top_p: 1,
-        frequency_penalty: 1,
-        presence_penalty: 1
-    });
-
-    const result = await response.json();
-    const completion = result.choices[0].message.content
-    console.log(completion)
-
-    return {
-        result: completion
-    }//`res for: ${input.text}::::: ${completion}`;
-  }
-})*/
-
-/*actions.add({
-    name: 'map',
-    title: 'Show on Map',
-    input: [
-      Inputs('city').String().Optional(),
-    ],
-    card: 'map',
-    handler: async event => {
-        return {
-          city: event.city
-        }
-    }
-})
-
-actions.add({
-  name: 'data',
-  title: 'Show Message',
-  input: [],
-  card: 'data',
-  handler: async () => {
-      return {}
-  }
-})*/
-
-//app.use(actions.middleware)
 
 app.get("/__space/actions", (req, res) => {
     res.json({
@@ -108,6 +38,10 @@ app.post("/api/summarize", async (req, res) => {
     const srcText = req.body.text;
 
     try {
+        const configuration = new Configuration({
+            apiKey: process.env.OPENAI_API_KEY
+        });
+        const openai = new OpenAIApi(configuration);
         const response = await openai.createCompletion({
             model: "gpt-3.5-turbo",
             //prompt: `${LLM_PREFIX} ${srcText}`,
@@ -124,6 +58,7 @@ app.post("/api/summarize", async (req, res) => {
         res.json({ summary: response.choices[0].text });
     }
     catch (e) {
+        console.error(e);
         res.json({ summary: `Could not complete summarization task: ${e}` });
     }
 
